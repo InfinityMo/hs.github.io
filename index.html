@@ -193,15 +193,15 @@
         case 1:
           // 向上
           // debugger
-          distance -= 667
-          if (distance <= -667 * 3) {
-            distance = -667 * 3
+          distance -= window.gobalHeight
+          if (distance <= -window.gobalHeight * 3) {
+            distance = -window.gobalHeight * 3
           }
           $('.img-wrap').css("transform", "translate3d(" + distance + "px,0,0)")
           break;
         case 2:
           // debugger
-          distance += 667
+          distance += window.gobalHeight
           if (distance >= 0) {
             distance = 0
           }
