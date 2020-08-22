@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./javascript/jquery-1.12.4.min.js?v=1"></script>
+
+  <style type="text/css">
+    * {
+      /*初始化样式*/
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      /*用于 获取 屏幕的可视宽高*/
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      /*让 body 初始 width 和 height 就 等于 页面可视区域的 宽高*/
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+
+      /*用于 测试的 样式*/
+      /* background-color: #444; */
+      color: #FFF;
+      letter-spacing: 4px;
+      font-size: 28px;
+      /*文字居中*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (orientation:portrait) {
+
+      /*竖屏样式*/
+      body {
+        transform-origin: 0 0;
+        transform: rotateZ(90deg) translateY(-100%);
+      }
+    }
+
+    .img-wrap {
+      display: flex;
+      transition: all 0ms ease 0s;
+    }
+
+    .img-wrap li {
+      /* height: 375px;
+      width: 667px; */
+    }
+
+    .img-wrap li img {
+      /* height: 375px;
+      width: 667px; */
+      /* height: 375px !important; */
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="img-wrap">
+    <li><img src="./images/a2.jpg"></li>
+    <li><img src="./images/b2.jpg"></li>
+    <li><img src="./images/c2.jpg"></li>
+    <li><img src="./images/d2.jpg"></li>
+  </ul>
+  <script>
+
+    (function () {
+      window.gobalWidth = 0
+      window.gobalHeight = 0
+      function resize() {
+        var body = document.getElementsByTagName('body')[0];
+        var html = document.getElementsByTagName('html')[0];
+        var width = html.clientWidth;
+        var height = html.clientHeight;
+        window.gobalWidth = width;
+        window.gobalHeight = height;
+        var max = width > height ? width : height;
+        var min = width > height ? height : width;
+        body.style.width = max + "px";
+        body.style.height = min + "px";
+        // console.log(document.getElementsByClassName('img-wrap').width)
+        $('.img-wrap').css({ width: gobalHeight + "px", height: gobalWidth + "px" })
+        var liArr = $("li")
+        liArr.each(function (i) {
+          liArr[i].children[0].style.width = gobalHeight + "px"
+          liArr[i].children[0].style.height = gobalWidth + "px"
+        });
+      }
+      resize();
+      window.addEventListener("resize", resize)
+    })();
+
+    function GetSlideDirection(startX, startY, endX, endY) {
+      var dy = startY - endY;
+      //var dx = endX - startX;  
+      var result = 0;
+      if (dy > 0) {//向上滑动
+        result = 1;
+      } else {//向下滑动
+        result = 2;
+      }
+      return result;
+    }
+    $('li').click(function (e) {
+      e.preventDefault()
+      if (!$(this).hasClass("tgaClass")) {
+        var chart = $(this).find('img').attr('src').substring(9, 10)
+        switch (chart) {
+          case 'a':
+            $(this).addClass("tgaClass")
+            $(this).find('img').attr('src', './images/a1.jpg')
+            break;
+          case 'b':
+            $(this).addClass("tgaClass")
+            $(this).find('img').attr('src', './images/b1.jpg')
+            break;
+          case 'c':
+            $(this).addClass("tgaClass")
+            $(this).find('img').attr('src', './images/c1.jpg')
+            break;
+          case 'd':
+            $(this).addClass("tgaClass")
+            $(this).find('img').attr('src', './images/d1.jpg')
+            break;
+          case 'e':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/e1.jpg')
+            break;
+          case 'f':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/f1.jpg')
+            break;
+          case 'g':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/g1.jpg')
+            break;
+          case 'h':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/h1.jpg')
+            break;
+          case 'i':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/i1.jpg')
+            break;
+          case 'j':
+            $(this).addClass("tgaClass")
+            $(this).attr('src', './images/j1.jpg')
+            break;
+        }
+      }
+
+    })
+    //滑动处理  
+    var startX, startY;
+    var distance = 0
+    document.addEventListener('touchstart', function (ev) {
+      startX = ev.touches[0].pageX;
+      startY = ev.touches[0].pageY;
+    }, false);
+    // document.addEventListener('touchmove', function (ev) {
+    //   startX = ev.touches[0].pageX;
+    //   startY = ev.touches[0].pageY;
+    //   var w = startX < 0 ? startX * -1 : startX;     //x轴的滑动值
+    //   var h = startY < 0 ? startY * -1 : startY;     //y轴的滑动值
+    //   if (w > h) {                //如果是在x轴中滑动
+    //     event.preventDefault();
+    //   }
+    // })
+    document.addEventListener('touchend', function (ev) {
+      var endX, endY;
+      endX = ev.changedTouches[0].pageX;
+      endY = ev.changedTouches[0].pageY;
+      var diffX = endX - startX
+      var diffY = endY - startY
+      console.log(Math.abs(diffY))
+      if (Math.abs(diffY) < 5) return false
+      var direction = GetSlideDirection(startX, startY, endX, endY);
+      switch (direction) {
+        case 0:
+          break;
+        case 1:
+          // 向上
+          // debugger
+          distance -= 667
+          if (distance <= -667 * 3) {
+            distance = -667 * 3
+          }
+          $('.img-wrap').css("transform", "translate3d(" + distance + "px,0,0)")
+          break;
+        case 2:
+          // debugger
+          distance += 667
+          if (distance >= 0) {
+            distance = 0
+          }
+          $('.img-wrap').css("transform", "translate3d(" + distance + "px,0,0)")
+          break;
+
+        default:
+      }
+    }, false); 
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* html {
+  width: 100vh;
+  height: 100vw;
+} */
+
+body {
+  /* transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+
+  -moz-transform: rotate(90deg);
+
+  -webkit-transform: rotate(90deg);
+
+  -o-transform: rotate(90deg); */
+
+
+}
+
+#app {
+  width: 100vh;
+  height: 100vw;
+  /* width: 100vh;
+  height: 100vw; */
+  background: #000;
+}
+
+.wrap {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#app img {
+  /* position: absolute;
+  left: -50%;
+  top: -50%; */
+  width: 100vh;
+  height: 100vw;
+
+  transform: rotate(90deg)
+}
+
+#app img.desaturate {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+}
